@@ -23,6 +23,9 @@ app.use(basicAuth({
     authorizeAsync: true,
 }))
 
+const dotenv = require('dotenv');
+dotenv.config();
+
 var auth_username='admin';
 var auth_password='1234';
 
@@ -48,7 +51,36 @@ app.use('/book', bookRouter);
 app.use('/borrower', borrowerRouter);
 app.use('/user', userRouter);
 
-
+function myAuthorizer(username, password,cb){
+    db.query('SELECT password FROM user_table WHERE username = ?',[username], 
+      function(dbError, dbResults, fields) {
+        if(dbError){
+              response.json(dbError);
+            }
+        else {
+          if (dbResults.length > 0) {
+            bcrypt.compare(password,dbResults[0].password, 
+              function(err,res) {
+                if(res) {
+                  console.log("succes");
+                  return cb(null, true);
+                }
+                else {
+                  console.log("wrong password");
+                  return cb(null, false);
+                }			
+                response.end();
+              }
+            );
+          }
+          else{
+            console.log("user does not exists");
+            return cb(null, false);
+          }
+        }
+      }
+    );
+  }
 
 module.exports = app;
 
