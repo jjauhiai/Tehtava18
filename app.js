@@ -2,21 +2,22 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const db = require('./database');
-const bcrypt = require('bcryptjs');
-const basicAuth = require('express-basic-auth');
+//const db = require('./database');
+//const bcrypt = require('bcryptjs');
+//const basicAuth = require('express-basic-auth');
 
-var bookRouter = require('./routes/book');
-var borrowerRouter = require('./routes/borrower');
-var userRouter = require('./routes/user');
+var opiskelijaRouter = require('./routes/opiskelija');
+var opintojaksoRouter = require('./routes/opintojakso');
+var arviointiRouter=require('./routes/arviointi');
+//var userRouter = require('./routes/user');
 
 var app = express();
 
 const helmet = require('helmet');
 const cors = require('cors');
 
-//const basicAuth = require('express-basic-auth');
-//app.use(basicAuth({users: { 'admin': '1234' }}))
+/*const basicAuth = require('express-basic-auth');
+app.use(basicAuth({users: { 'admin': '1234' }}))
 
 app.use(basicAuth({
     authorizer: myAuthorizer,
@@ -36,7 +37,7 @@ function myAuthorizer(username, password, cb){
     else{
         return cb(null, false);
     }
-}
+}*/
 
 app.use(helmet());
 app.use(cors());
@@ -47,11 +48,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/book', bookRouter);
-app.use('/borrower', borrowerRouter);
-app.use('/user', userRouter);
+app.use('/opiskelija', opiskelijaRouter);
+app.use('/opintojakso', opintojaksoRouter);
+app.use('/arviointi', arviointiRouter);
 
-function myAuthorizer(username, password,cb){
+/*function myAuthorizer(username, password,cb){
     db.query('SELECT password FROM user_table WHERE username = ?',[username], 
       function(dbError, dbResults, fields) {
         if(dbError){
@@ -81,6 +82,7 @@ function myAuthorizer(username, password,cb){
       }
     );
   }
+  */
 
 module.exports = app;
 
