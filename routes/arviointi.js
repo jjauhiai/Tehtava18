@@ -1,4 +1,4 @@
-re('express');
+const express = require('express');
 const router = express.Router();
 const arviointi = require('../models/arviointi_model');
 

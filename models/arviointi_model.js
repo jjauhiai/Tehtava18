@@ -2,7 +2,7 @@ const db = require('../database');
 
 
 const arviointi={
-  get: function(callback) {
+  getAll: function(callback) {
     return db.query('select * from Arviointi', callback);
   },
   getById: function(id, callback) {
@@ -20,12 +20,12 @@ const arviointi={
   },
   update: function(id, arviointi, callback) {
     return db.query(
-      'update arviointi set paivamaara=?,arvosana=?, idOpiskelija=? idOpintojakso=? where idArviointi=?',
+      'update arviointi set paivamaara=?,arvosana=?, idOpiskelija=?, idOpintojakso=? where idArviointi=?',
       [arviointi.paivamaara,arviointi.arvosana,arviointi.idOpiskelija,arviointi.idOpintojakso, id],
       callback
     );
   }
 
-}
+};
           
 module.exports = arviointi;

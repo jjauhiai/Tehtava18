@@ -2,7 +2,7 @@ const db = require('../database');
 
 const opintojakso = {
   getById: function(id, callback) {
-    return db.query('select * from opintojakso where id_opintojakso=?', [id], callback);
+    return db.query('select * from opintojakso where idOpintojakso=?', [id], callback);
   },
   getAll: function(callback) {
     return db.query('select * from opintojakso', callback);
@@ -15,11 +15,11 @@ const opintojakso = {
     );
   },
   delete: function(id, callback) {
-    return db.query('delete from opintojakso where id_opintojakso=?', [id], callback);
+    return db.query('delete from opintojakso where idOpintojakso=?', [id], callback);
   },
   update: function(id, opintojakso, callback) {
     return db.query(
-      'update opintojakso set koodi=?,laajuus=?, nimi=? where id_opintojakso=?',
+      'update opintojakso set koodi=?,laajuus=?, nimi=? where idOpintojakso=?',
       [opintojakso.koodi, opintojakso.laajuus, opintojakso.nimi, id],
       callback
     );
